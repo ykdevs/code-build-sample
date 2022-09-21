@@ -5,7 +5,8 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-      - export TASK_DEFINITION_ARN=$(aws ecs describe-task-definition --task-definition SampleServiceTaskDef | jq -r .taskDefinition.taskDefinitionArn)
+      - echo Make appspec.yaml file
+      - export TASK_DEFINITION_ARN=$(aws ecs describe-task-definition --task-definition ${TASK_DEFINITION_NAME} | jq -r .taskDefinition.taskDefinitionArn)
       - cat appspec.yaml.tamplte | envsubst > appspec.yaml
   build:
     commands:

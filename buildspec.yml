@@ -7,7 +7,7 @@ phases:
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - echo Make appspec.yaml file
       - export TASK_DEFINITION_ARN=$(aws ecs describe-task-definition --task-definition ${TASK_DEFINITION_NAME} | jq -r .taskDefinition.taskDefinitionArn)
-      - cat appspec.yaml.tamplte | envsubst > appspec.yaml
+      - cat appspec.yaml.template | envsubst > appspec.yaml
   build:
     commands:
       - echo Build started on `date`
